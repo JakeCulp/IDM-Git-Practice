@@ -5,6 +5,11 @@ const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 
+
+// Default gulp task to run
+gulp.task('default', ['style-reload','copy','watch']);
+
+
 // Get one .styl file and render
 gulp.task('style-reload', function () {
   return gulp.src('src/stylus/screen.styl')
@@ -23,13 +28,10 @@ gulp.task('copy', function () {
 
 
 gulp.task('watch',['style-reload','copy'], () => {
-  browserSync({
+  browserSync.init({
     server: {
       baseDir: 'dist'
     }
   });
-	gulp.watch('src/stylus/screen.styl', ['default']);
+	gulp.watch('src/stylus/screen.styl', ['style-reload']);
 });
-
-// Default gulp task to run
-gulp.task('default', ['style-reload','copy','watch']);
